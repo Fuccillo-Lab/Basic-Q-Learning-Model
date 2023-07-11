@@ -18,6 +18,7 @@ end
 
 %Generate choices using probabilities from softmax equation
 accurateGuess=zeros(1,SessionData.nTrials);
+validChoices=0;
 for i=1:SessionData.nTrials
     c=rand(1);
     if c<choiceProbabilities(1,i)
@@ -30,7 +31,13 @@ for i=1:SessionData.nTrials
         accurateGuess(i)=1;
     end
     
+    if choices(i)==0
+        %We don't incorporate omissions into model accuracy
+    else
+        validChoices=validChoices+1;
+    end
+    
 end
-acc=sum(accurateGuess(5:end))/(SessionData.nTrials-4);
+acc=sum(accurateGuess)/(validChoices);
 
 end
