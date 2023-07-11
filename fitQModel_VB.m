@@ -65,13 +65,11 @@ function [result] = fitQModel_VB(SessionData,model)
     %% Create output for results
     
     if model=='SoftMax' 
-        inputs(3)=0;
         inputs(4)=0;
         [choiceProbabilities, Qvalues,RPEs]=LV_QLearn_Softmax_VB(SessionData,...
         inputs(1),inputs(2),inputs(3));
     end
     if model=='SoftDec' 
-        inputs(4)=0;
         [choiceProbabilities, Qvalues,RPEs]=LV_QLearn_SoftmaxDecay_VB(SessionData,...
         inputs(1),inputs(2),inputs(3),inputs(4));
     end
