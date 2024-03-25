@@ -43,12 +43,12 @@ function [result] = fitQModel_VB(SessionData,model)
     beq=[];
     Aineq=[];
     bineq=[];
-    lb = [0 0 -1 0];    % lower limits for alpha, beta, decay rate, and inverse alpha
-    ub = [1 5 1 1];  % upper limits for alpha, beta, decay rate, and inverse alpha
-    inx = [rand(1) rand(1) rand(1) rand(1)]; % starting points to fit from (shouldn't matter)
+    lb = [0 0 -10 0];    % lower limits for alpha, beta, bias and decay
+    ub = [1 5 10 1];  % upper limits for alpha, beta, bias and decay
+    inx = [rand(1) rand(1) 0 rand(1)]; % starting points to fit from (shouldn't matter)
 
-    options = optimset('Display','on','MaxIter',5000000,'TolFun',1e-15,'TolX',1e-15,...
-        'DiffMaxChange',1e-2,'DiffMinChange',1e-6,'MaxFunEvals',5000000,...
+    options = optimset('Display','on','MaxIter',50000000,'TolFun',1e-15,'TolX',1e-15,...
+        'DiffMaxChange',1e-2,'DiffMinChange',1e-6,'MaxFunEvals',50000000,...
         'LargeScale','off');
     %% Define algorithm and options for fitting
     % Inputs(1:4) are alpha, beta, decay rate, and inverse alpha
@@ -64,11 +64,12 @@ function [result] = fitQModel_VB(SessionData,model)
     [inputs, loglike, exitflag, output, solutions] = run(ms,problem,k);
     %% Create output for results
     
-    if model=='SoftMax' 
-        inputs(4)=0;
+    if model=='SoftMax'
         [choiceProbabilities, Qvalues,RPEs]=LV_QLearn_Softmax_VB(SessionData,...
         inputs(1),inputs(2),inputs(3));
+        inputs(4)=0;
     end
+   
     if model=='SoftDec' 
         [choiceProbabilities, Qvalues,RPEs]=LV_QLearn_SoftmaxDecay_VB(SessionData,...
         inputs(1),inputs(2),inputs(3),inputs(4));

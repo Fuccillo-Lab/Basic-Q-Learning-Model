@@ -26,21 +26,20 @@
     xlabel('Accuracy')
     hold off;
     %% Test Softmax Decay
-    % NOT WORKING!!!!!!
-%     softDecayResult=fitQModel_VB(SessionData,'SoftDec');
-%     plotVB(softDecayResult);
-%     
-%         accuracyList=zeros(1,2000);
-%     for i=1:2000
-%         accuracyList(i)=modelAccuracy_VB(softDecayResult);
-%     end
-%     results.ModelName(2)={'SoftDec'};
-%     results.MedianAcc(2)=median(accuracyList);
-%     results.Likelihood(2)=softDecayResult.likelihood;
-%     figure()
-%     histogram(accuracyList);
-%     hold on
-%     title('Measuring Accuracy of Softmax Decay 2000 times')
-%     ylabel(' # of occurences')
-%     xlabel('Accuracy')
-%     hold off;
+    softDecayResult=fitQModel_VB(SessionData,'SoftDec');
+    plotVB(softDecayResult);
+    %% 
+    accuracyList=zeros(1,2000);
+    for i=1:2000
+        accuracyList(i)=modelAccuracy_VB(softDecayResult);
+    end
+    results.ModelName(2)={'SoftDec'};
+    results.MedianAcc(2)=median(accuracyList);
+    results.Likelihood(2)=softDecayResult.likelihood;
+    figure()
+    histogram(accuracyList);
+    hold on
+    title('Measuring Accuracy of Softmax Decay 2000 times')
+    ylabel(' # of occurences')
+    xlabel('Accuracy')
+    hold off;

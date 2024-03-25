@@ -14,13 +14,16 @@ rpe = zeros(size(Qvalues));
 for n = 1:nTrials-1
     %compute rpe
     switch choices(n)
+        case 0
+            rpe(1,n) = (0);
+            rpe(2,n) = (0);
         case 1
             rpe(1,n) = (rewards(1,n)) - Qvalues(1,n); %compute rpe (negative rpe for 0uL rewards
-            rpe(2,n) = (0) - Qvalues(1,n);
+            rpe(2,n) = (0) - Qvalues(2,n);
             Qvalues(1, n+1) = Qvalues(1,n) + alpha*rpe(1,n);     %update chosen
             Qvalues(2, n+1) = Qvalues(2,n) + decay*rpe(2,n);     % update unchosen with 0
         case 2
-            rpe(1,n) = (0) - Qvalues(2,n); %compute rpe (negative rpe for 0uL rewards
+            rpe(1,n) = (0) - Qvalues(1,n); %compute rpe (negative rpe for 0uL rewards
             rpe(2,n) = rewards(2,n) - Qvalues(2,n);
             Qvalues(1, n+1) = Qvalues(1,n) + decay*rpe(1,n);     %update chosen
             Qvalues(2, n+1) = Qvalues(2,n) + alpha*rpe(2,n);     % update unchosen with 0

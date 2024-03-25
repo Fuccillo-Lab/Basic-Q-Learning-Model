@@ -1,5 +1,5 @@
 %% Compare Model Fit
-function [likelihood]=compareModelFit_VB(SessionData,alpha,whichModel,beta,decay,bias)
+function [likelihood]=compareModelFit_VB(SessionData,alpha,whichModel,beta,bias,decay)
     if ~exist('SessionData','var')
        uiopen 
     end
